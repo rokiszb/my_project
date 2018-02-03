@@ -1,0 +1,16 @@
+[
+    {
+        "name": "Rocoptus",
+        "email": "rok@os",
+        "checkbox": true,
+        "registration_time": "2018-02-03 17:38:15",
+        "unix_timestamp": 1517675895
+    },
+    {
+        "name": "Rocoptus",
+        "email": "rok@os",
+        "checkbox": true,
+        "registration_time": "2018-02-03 17:38:31",
+        "unix_timestamp": 1517675911
+    }
+]
