@@ -22,5 +22,17 @@
             "Sports": true,
             "Politics": false
         }
+    },
+    {
+        "name": "Tok",
+        "email": "rok@osz",
+        "registration_time": "2018-02-04 18:55:35",
+        "unix_timestamp": 1517766935,
+        "subscriptions": {
+            "Media": false,
+            "News": true,
+            "Sports": false,
+            "Politics": true
+        }
     }
 ]
