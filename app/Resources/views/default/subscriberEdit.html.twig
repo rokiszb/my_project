@@ -1,0 +1,94 @@
+{% extends 'base.html.twig' %}
+{% block title %}Edit{% endblock %}
+
+{% block body %}
+<div class="container">
+    <h1>Edit subscriber</h1>
+    <form action="" method="post" onsubmit="return validateForm()">
+        <div class="form-group">
+            <label for="inputName">Name</label>
+            {{ form_widget(form.name, {
+                'attr':{
+                    'class': 'form-control',
+                    'placeholder': 'Enter name',
+                    'pattern': '([A-Za-z]){3,}',
+                    'title': 'Only alphabet letters, minimum 3',
+                    'value': userData.name
+                    }})
+            }}
+            {{ form_widget(form.user_id, {
+                'attr':{
+                    'class': 'form-control',
+                    'title': 'user_id',
+                    'value': subscriber
+                    }})
+            }}
+        </div>
+        <div class="form-group">
+            <label for="inputEmail">Email address</label>
+            {{ form_widget(form.email, {
+                    'attr':{
+                        'class': 'form-control',
+                        'placeholder': 'Enter email',
+                        'value': userData.email
+                        }}) }}
+            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+        </div>
+
+        <h3>Subscriptions list</h3>
+        <small id="subsHelp" class="form-text text-muted">Select at least 1.</small>
+
+        <div class="form-group subscriptions">
+            <div class="form-check">
+            {{ form_label(form.News)   }}
+            {{ form_widget(form.News, {
+                    'attr':{
+                        'checked': userData.subscriptions.News
+                        }})  }}
+            </div>
+            <div class="form-check">
+            {{ form_label(form.Media)   }}
+            {{ form_widget(form.Media, {
+                    'attr':{
+                        'checked': userData.subscriptions.Media
+                        }})  }}
+            </div>
+            <div class="form-check">
+            {{ form_label(form.Sports)   }}
+            {{ form_widget(form.Sports, {
+                    'attr':{
+                        'checked': userData.subscriptions.Sports
+                        }})  }}
+            </div>
+            <div class="form-check">
+            {{ form_label(form.Politics)   }}
+            {{ form_widget(form.Politics, {
+                    'attr':{
+                        'checked': userData.subscriptions.Politics
+                        }})  }}
+            </div>
+        </div>
+        <div class="form-group button-group">
+            {{ form_widget(form.save) }}
+        </div>
+
+    {{ form_end(form) }}
+</div>
+
+{% endblock %}
+
+{% block customScripts %}
+<script>
+
+    function validateForm() {
+        var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+        var checkedOne = Array.prototype.slice.call(checkboxes).some(x => x.checked);
+
+        if (!checkedOne) {
+            alert("Must select at least one subscription");
+            return false;
+        }
+    }
+
+</script>
+{% endblock %}

@@ -48,14 +48,12 @@ class DefaultController extends Controller
             ));
         }
 
-
         $form = $form
         ->add('save', SubmitType::class, array(
             'label' => 'Submit',
             'attr'=> array('class'=>'btn btn-primary')
         ))->getForm();
         // var_dump(($form)); die();
-
 
         $form->handleRequest($request);
 
@@ -92,12 +90,79 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/form/subscribe", name="form_subscribe")
-     * @Method("POST")
+     * @Route("/edit/{subscriber}", name="editSubscriber")
      */
-    public function postFormAction(Request $request)
+    public function editSubscriberAction($subscriber, Request $request)
     {
-        return new Response($request);
+        $form = $this->createFormBuilder();
+        $form->add('name', TextType::class)
+            ->add('email', EmailType::class)
+            ->add('user_id', TextType::class, array(
+                'attr'=> array('hidden'=>'hidden')))
+            ;
+
+        $subscriptionsDirectory = $this->getParameter('subscriptions_directory');
+        $subscriptionsContents = file_get_contents($subscriptionsDirectory);
+        $subscriptions = json_decode($subscriptionsContents, true);
+        foreach ($subscriptions['subscriptions'] as $key => $value) {
+            $form->add($value, CheckboxType::class, array(
+                'label'    => $value,
+                'required' => false,
+                'attr'=> array('class'=>'subscriptions')
+            ));
+        }
+
+        $form = $form
+        ->add('save', SubmitType::class, array(
+            'label' => 'Submit',
+            'attr'=> array('class'=>'btn btn-primary')))
+        ->getForm();
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            // $form->getData() holds the submitted values
+            $formData = $form->getData();
+
+            $data['name'] = $formData['name'];
+            $data['email'] = $formData['email'];
+            // $data['registration_time'] = $formData['registration_time'];
+            // $data['unix_timestamp'] = $formData['unix_timestamp'];
+            foreach ($formData as $name => $value) {
+                if (is_bool($value)) {
+                    $data['subscriptions'][$name] = $value;
+                }
+            }
+
+            $subscribersDir = $this->getParameter('subscribers_directory');
+            $jsonData = json_encode(array('0' => $data));
+
+            $fileContents = file_get_contents($subscribersDir);
+            $decodeJson = json_decode($fileContents, true);
+            $decodeJson[$formData['user_id']];
+
+        // var_dump($data['subscriptions']);die();
+            $decodeJson[$formData['user_id']]['name'] = $data['name'];
+            $decodeJson[$formData['user_id']]['email'] = $data['email'];
+            $decodeJson[$formData['user_id']]['subscriptions'] = $data['subscriptions'];
+
+            // $decodeJson[] = $data;
+            $jsonData = json_encode($decodeJson, JSON_PRETTY_PRINT);
+
+            file_put_contents($subscribersDir, $jsonData );
+
+            // redirect to a route with parameters
+            return $this->redirectToRoute('editSubscriber', array('subscriber' => $formData['user_id'] ));
+        }
+
+        $subscribersDir = $this->getParameter('subscribers_directory');
+        $fileContents = file_get_contents($subscribersDir);
+        $decodeJson = json_decode($fileContents, true);
+        return $this->render('default/subscriberEdit.html.twig', [
+            'form' => $form->createView(),
+            'userData' => $decodeJson[$subscriber],
+            'subscriber' => $subscriber,
+        ]);
     }
 
     /**
@@ -109,9 +174,6 @@ class DefaultController extends Controller
         $subscribersDir = $this->getParameter('subscribers_directory');
         $fileContents = file_get_contents($subscribersDir);
         $decodeJson = json_decode($fileContents, true);
-
-        // var_dump($decodeJson);die();
-
 
         return $this->render('default/admin.html.twig', [
             'userData' => $decodeJson,

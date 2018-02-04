@@ -1,13 +1,13 @@
 [
     {
-        "name": "Rocoptus",
+        "name": "Rocoptusx",
         "email": "rok@os",
         "registration_time": "2018-02-04 17:27:14",
         "unix_timestamp": 1517761634,
         "subscriptions": {
             "Media": true,
             "News": false,
-            "Sports": true,
+            "Sports": false,
             "Politics": false
         }
     },
@@ -19,7 +19,7 @@
         "subscriptions": {
             "Media": true,
             "News": true,
-            "Sports": false,
+            "Sports": true,
             "Politics": false
         }
     }
