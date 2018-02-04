@@ -6,3 +6,17 @@ h1 {
     max-width: 700px;
     padding-top: 200px;
 }
+
+.table-container {
+    max-width: 800px;
+    padding-top: 50px;
+}
+
+.fa-sort {
+    float: right;
+}
+
+@media screen and (max-width: 800px) {
+    .table {
+        width: 100%;
+    }

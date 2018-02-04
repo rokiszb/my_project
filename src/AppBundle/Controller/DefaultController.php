@@ -82,27 +82,13 @@ class DefaultController extends Controller
      */
     public function adminAction(Request $request)
     {
-        // replace this example code with whatever you need
-        return $this->render('default/index.html.twig', [
-            'base_dir' => realpath($this->getParameter('kernel.project_dir')) . DIRECTORY_SEPARATOR,
+
+        $subscribersDir = $this->getParameter('subscribers_directory');
+        $fileContents = file_get_contents($subscribersDir);
+        $decodeJson = json_decode($fileContents, true);
+        //var_dump($decodeJson); die();
+        return $this->render('default/admin.html.twig', [
+            'userData' => $decodeJson,
         ]);
-    }
-
-    /**
-     * @Route("/{note}/notes", name="admin")
-     * @Method("GET")
-     */
-    public function getInfoAction()
-    {
-        $notes = [
-            ['id' => 1, 'username' => 'Jesus', 'title' => 'Clean your room'],
-            ['id' => 1, 'username' => 'Jesus', 'title' => 'Clean your room'],
-        ];
-
-        $data = [
-            'notes' => $notes,
-        ];
-
-        return new JsonResponse($data);
     }
 }
