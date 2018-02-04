@@ -4,7 +4,7 @@ h1 {
 
 .container {
     max-width: 700px;
-    padding-top: 200px;
+    padding-top: 150px;
 }
 
 .table-container {
@@ -20,3 +20,31 @@ h1 {
     .table {
         width: 100%;
     }
+}
+
+#subsHelp {
+    text-align:center;
+    margin-bottom: 50px;
+}
+
+h3 {
+    text-align: center;
+}
+
+.subscriptions {
+    display: flex;
+}
+
+.form-check {
+    flex-basis: 120px;
+}
+
+.admin-url {
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+.button-group {
+    text-align: center;
+}

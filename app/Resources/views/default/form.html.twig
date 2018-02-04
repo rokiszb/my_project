@@ -4,7 +4,7 @@
 {% block body %}
 <div class="container">
     <h1>Subscripction form </h1>
-    {{ form_start(form) }}
+    <form action="" method="post" onsubmit="return validateForm()">
         <div class="form-group">
             <label for="inputName">Name</label>
             {{ form_widget(form.name, {'attr':{'class': 'form-control', 'placeholder': 'Enter name', 'pattern': '([A-Za-z]){3,}', 'title': 'Only alphabet letters, minimum 3'}}) }}
@@ -14,17 +14,51 @@
             {{ form_widget(form.email, {'attr':{'class': 'form-control', 'placeholder': 'Enter email'}}) }}
             <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
         </div>
-        <div class="form-group">
+
+        <h3>Select your subscriptions</h3>
+        <small id="subsHelp" class="form-text text-muted">Select at least 1.</small>
+
+        <div class="form-group subscriptions">
             <div class="form-check">
-                {# <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                <label class="form-check-label" for="defaultCheck1">
-                    Default checkbox
-                </label> #}
-            {{ form_widget(form.checkbox, {'attr':{'class': 'form-check-input'}} )  }}
-            {{ form_label(form.checkbox ) }}
+            {{ form_label(form.News)   }}
+            {{ form_widget(form.News)  }}
+            </div>
+            <div class="form-check">
+            {{ form_label(form.Media)   }}
+            {{ form_widget(form.Media)  }}
+            </div>
+            <div class="form-check">
+            {{ form_label(form.Sports)   }}
+            {{ form_widget(form.Sports)  }}
+            </div>
+            <div class="form-check">
+            {{ form_label(form.Politics)   }}
+            {{ form_widget(form.Politics)  }}
             </div>
         </div>
-        {{ form_widget(form.save, {'attr':{'class': 'btn btn-primary'}} ) }}
+        <div class="form-group button-group">
+            {{ form_widget(form.save) }}
+        </div>
+
     {{ form_end(form) }}
 </div>
+<div class="admin-url">
+    <a href="{{ path('admin') }}">Go to admin panel</a>
+</div>
+{% endblock %}
+
+{% block customScripts %}
+<script>
+
+    function validateForm() {
+        var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+        var checkedOne = Array.prototype.slice.call(checkboxes).some(x => x.checked);
+
+        if (!checkedOne) {
+            alert("Must select at least one subscription");
+            return false;
+        }
+    }
+
+</script>
 {% endblock %}

@@ -18,7 +18,11 @@
                     <tr>
                         <td>{{ user.name }}</td>
                         <td>{{ user.email }}</td>
-                        <td>{{ user.checkbox }}</td>
+                        <td>
+                        {% for subscriptionName, subscriptions in user.subscriptions if subscriptions  %}
+                            {{ subscriptionName }}
+                        {% endfor %}
+                        </td>
                         <td>{{ user.registration_time }}</td>
                     </tr>
                 {% else %}
@@ -31,16 +35,12 @@
 {% endblock %}
 {% block customScripts %}
 <script>
-{# $.extend( true, $.fn.dataTable.defaults, {
-
-} ); #}
-
-$(document).ready(function() {
-    $('#subscribers').DataTable( {
-        "searching": false,
-        "paging": false,
-        "ordering": true
+    $(document).ready(function() {
+        $('#subscribers').DataTable( {
+            "searching": false,
+            "paging": false,
+            "ordering": true
+        } );
     } );
-} );
 </script>
 {% endblock %}

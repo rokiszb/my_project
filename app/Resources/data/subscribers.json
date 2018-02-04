@@ -1,9 +1,26 @@
 [
     {
-        "name": "Rokas",
+        "name": "Rocoptus",
         "email": "rok@os",
-        "checkbox": true,
-        "registration_time": "2018-02-04 13:12:30",
-        "unix_timestamp": 1517746350
+        "registration_time": "2018-02-04 17:27:14",
+        "unix_timestamp": 1517761634,
+        "subscriptions": {
+            "Media": true,
+            "News": false,
+            "Sports": true,
+            "Politics": false
+        }
+    },
+    {
+        "name": "George",
+        "email": "gerge@em",
+        "registration_time": "2018-02-04 17:27:31",
+        "unix_timestamp": 1517761651,
+        "subscriptions": {
+            "Media": true,
+            "News": true,
+            "Sports": false,
+            "Politics": false
+        }
     }
 ]

@@ -3,6 +3,7 @@
 parameters:
     #parameter_name: value
     subscribers_directory: '%kernel.project_dir%/app/Resources/data/subscribers.json'
+    subscriptions_directory: '%kernel.project_dir%/app/Resources/data/subscriptions.json'
 services:
     # default configuration for services in *this* file
     _defaults:
