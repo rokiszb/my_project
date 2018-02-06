@@ -1,9 +1,9 @@
 [
     {
-        "name": "Dummy User",
+        "name": "Tester1",
         "email": "tester@test.com",
-        "registration_time": "2018-02-06 20:40:07",
-        "unix_timestamp": 1517946007,
+        "registration_time": "2018-02-06 20:59:24",
+        "unix_timestamp": 1517947164,
         "subscriptions": {
             "Media": false,
             "News": true,
