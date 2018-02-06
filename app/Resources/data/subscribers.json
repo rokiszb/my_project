@@ -1,27 +1,14 @@
 [
     {
-        "name": "rokas",
-        "email": "rokas@meta",
-        "registration_time": "2018-02-06 20:29:58",
-        "unix_timestamp": 1517945398,
-        "subscriptions": {
-            "Media": true,
-            "News": false,
-            "Sports": true,
-            "Politics": true
-        },
-        "active": true
-    },
-    {
-        "name": "Rokoko",
-        "email": "rko@ok",
-        "registration_time": "2018-02-06 20:31:58",
-        "unix_timestamp": 1517945518,
+        "name": "Dummy User",
+        "email": "tester@test.com",
+        "registration_time": "2018-02-06 20:40:07",
+        "unix_timestamp": 1517946007,
         "subscriptions": {
             "Media": false,
             "News": true,
             "Sports": false,
-            "Politics": false
+            "Politics": true
         },
         "active": true
     }
