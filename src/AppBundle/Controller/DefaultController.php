@@ -36,7 +36,7 @@ class DefaultController extends Controller
 
         $form = $this->createFormBuilder();
         $form->add('name', TextType::class)
-            ->add('email', EmailType::class)
+             ->add('email', EmailType::class)
             // ->add('checkbox', CheckboxType::class)
             ;
 
@@ -53,7 +53,6 @@ class DefaultController extends Controller
             'label' => 'Submit',
             'attr'=> array('class'=>'btn btn-primary')
         ))->getForm();
-        // var_dump(($form)); die();
 
         $form->handleRequest($request);
 
@@ -69,6 +68,7 @@ class DefaultController extends Controller
                     $data['subscriptions'][$name] = $value;
                 }
             }
+            $data['active'] = true;
 
             $subscribersDir = $this->getParameter('subscribers_directory');
             $jsonData = json_encode(array('0' => $data));
@@ -79,6 +79,11 @@ class DefaultController extends Controller
             $jsonData = json_encode($decodeJson, JSON_PRETTY_PRINT);
 
             file_put_contents($subscribersDir, $jsonData );
+
+            $this->addFlash(
+                'notice',
+                'Subscriber created succesfully'
+            );
 
             return $this->redirectToRoute('form');
         }
@@ -151,6 +156,11 @@ class DefaultController extends Controller
 
             file_put_contents($subscribersDir, $jsonData );
 
+            $this->addFlash(
+                'notice',
+                'User updated succesfully'
+            );
+
             // redirect to a route with parameters
             return $this->redirectToRoute('editSubscriber', array('subscriber' => $formData['user_id'] ));
         }
@@ -163,6 +173,40 @@ class DefaultController extends Controller
             'userData' => $decodeJson[$subscriber],
             'subscriber' => $subscriber,
         ]);
+    }
+
+    /**
+     * @Route("/delete/{subscriber}", name="deleteSubscriber")
+     */
+    public function deleteSubscriberAction($subscriber, Request $request)
+    {
+        $subscribersDir = $this->getParameter('subscribers_directory');
+        $fileContents = file_get_contents($subscribersDir);
+        $decodeJson = json_decode($fileContents, true);
+        $decodeJson[$subscriber]['active'] = false;
+        $jsonData = json_encode($decodeJson, JSON_PRETTY_PRINT);
+        file_put_contents($subscribersDir, $jsonData);
+
+        $this->addFlash(
+            'notice',
+            'User with email '.$decodeJson[$subscriber]['email'].' was removed from subscribers list.'
+        );
+
+        return $this->redirectToRoute('admin');
+    }
+
+    /**
+     * @Route("/error", name="error")
+     */
+    public function errorAction()
+    {
+    // retrieve the object from database
+    $this->addFlash(
+        'notice',
+        'Your changes were saved!'
+    );
+
+    return $this->redirectToRoute('admin');
     }
 
     /**

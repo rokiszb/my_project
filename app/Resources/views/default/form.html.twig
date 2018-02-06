@@ -2,63 +2,76 @@
 {% block title %}Subscribe{% endblock %}
 
 {% block body %}
-<div class="container">
-    <h1>Subscripction form </h1>
-    <form action="" method="post" onsubmit="return validateForm()">
-        <div class="form-group">
-            <label for="inputName">Name</label>
-            {{ form_widget(form.name, {'attr':{'class': 'form-control', 'placeholder': 'Enter name', 'pattern': '([A-Za-z]){3,}', 'title': 'Only alphabet letters, minimum 3'}}) }}
-        </div>
-        <div class="form-group">
-            <label for="inputEmail">Email address</label>
-            {{ form_widget(form.email, {'attr':{'class': 'form-control', 'placeholder': 'Enter email'}}) }}
-            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-        </div>
+    {% for message in app.flashes('notice') %}
+        <div class="container">
+            <div class="row">
+                <div class="col-offset-4 col">
 
-        <h3>Select your subscriptions</h3>
-        <small id="subsHelp" class="form-text text-muted">Select at least 1.</small>
+                        <div class="flash-notice-succes">
+                        {{ message }}
+                        </div>
 
-        <div class="form-group subscriptions">
-            <div class="form-check">
-            {{ form_label(form.News)   }}
-            {{ form_widget(form.News)  }}
-            </div>
-            <div class="form-check">
-            {{ form_label(form.Media)   }}
-            {{ form_widget(form.Media)  }}
-            </div>
-            <div class="form-check">
-            {{ form_label(form.Sports)   }}
-            {{ form_widget(form.Sports)  }}
-            </div>
-            <div class="form-check">
-            {{ form_label(form.Politics)   }}
-            {{ form_widget(form.Politics)  }}
+                </div>
             </div>
         </div>
-        <div class="form-group button-group">
-            {{ form_widget(form.save) }}
-        </div>
+    {% endfor %}
+    <div class="container">
+        <h1>Subscripction form </h1>
+        <form action="" method="post" onsubmit="return validateForm()">
+            <div class="form-group">
+                <label for="inputName">Name</label>
+                {{ form_widget(form.name, {'attr':{'class': 'form-control', 'placeholder': 'Enter name', 'pattern': '([A-Za-z]){3,}', 'title': 'Only alphabet letters, minimum 3'}}) }}
+            </div>
+            <div class="form-group">
+                <label for="inputEmail">Email address</label>
+                {{ form_widget(form.email, {'attr':{'class': 'form-control', 'placeholder': 'Enter email'}}) }}
+                <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+            </div>
 
-    {{ form_end(form) }}
-</div>
-<div class="admin-url">
-    <a href="{{ path('admin') }}">Go to admin panel</a>
-</div>
-{% endblock %}
+            <h3>Select your subscriptions</h3>
+            <small id="subsHelp" class="form-text text-muted">Select at least 1.</small>
 
-{% block customScripts %}
-<script>
+            <div class="form-group subscriptions">
+                <div class="form-check">
+                {{ form_label(form.News)   }}
+                {{ form_widget(form.News)  }}
+                </div>
+                <div class="form-check">
+                {{ form_label(form.Media)   }}
+                {{ form_widget(form.Media)  }}
+                </div>
+                <div class="form-check">
+                {{ form_label(form.Sports)   }}
+                {{ form_widget(form.Sports)  }}
+                </div>
+                <div class="form-check">
+                {{ form_label(form.Politics)   }}
+                {{ form_widget(form.Politics)  }}
+                </div>
+            </div>
+            <div class="form-group button-group">
+                {{ form_widget(form.save) }}
+            </div>
 
-    function validateForm() {
-        var checkboxes = document.querySelectorAll('input[type="checkbox"]');
-        var checkedOne = Array.prototype.slice.call(checkboxes).some(x => x.checked);
+        {{ form_end(form) }}
+    </div>
+    <div class="admin-url">
+        <a href="{{ path('admin') }}">Go to admin panel</a>
+    </div>
+    {% endblock %}
 
-        if (!checkedOne) {
-            alert("Must select at least one subscription");
-            return false;
+    {% block customScripts %}
+    <script>
+
+        function validateForm() {
+            var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            var checkedOne = Array.prototype.slice.call(checkboxes).some(x => x.checked);
+
+            if (!checkedOne) {
+                alert("Must select at least one subscription");
+                return false;
+            }
         }
-    }
 
-</script>
-{% endblock %}
+    </script>
+    {% endblock %}
