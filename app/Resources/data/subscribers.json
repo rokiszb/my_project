@@ -11,5 +11,18 @@
             "Politics": true
         },
         "active": true
+    },
+    {
+        "name": "test",
+        "email": "rokas@meta",
+        "registration_time": "2018-02-07 01:04:36",
+        "unix_timestamp": 1517961876,
+        "subscriptions": {
+            "Media": false,
+            "News": false,
+            "Sports": false,
+            "Politics": true
+        },
+        "active": true
     }
 ]
