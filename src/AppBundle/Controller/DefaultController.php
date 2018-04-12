@@ -15,7 +15,7 @@ use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\Config\FileLocator;
-use AppBundle\Entity\Subscription;
+use AppBundle\Entity\Subscriptions;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
 class DefaultController extends Controller
@@ -25,17 +25,13 @@ class DefaultController extends Controller
      */
     public function indexAction(Request $request)
     {
-        $subscriptionsDirectory = $this->getParameter('subscriptions_directory');
-        $subscriptionsContents = file_get_contents($subscriptionsDirectory);
-        $subscriptions = json_decode($subscriptionsContents, true);
-        $subscription = new Subscription();
+		$subscriptions = new Subscriptions();
 
         $form = $this->createFormBuilder();
         $form->add('name', TextType::class)
-             ->add('email', EmailType::class)
-            ;
+			 ->add('email', EmailType::class);
 
-        foreach ($subscriptions['subscriptions'] as $key => $value) {
+        foreach ($subscriptions->getSubscriptions() as $key => $value) {
             $form->add($value, CheckboxType::class, array(
                 'label'    => $value,
                 'required' => false,
@@ -44,10 +40,10 @@ class DefaultController extends Controller
         }
 
         $form = $form
-        ->add('save', SubmitType::class, array(
-            'label' => 'Submit',
-            'attr'=> array('class'=>'btn btn-primary')
-        ))->getForm();
+			->add('save', SubmitType::class, array(
+				'label' => 'Submit',
+				'attr'=> array('class'=>'btn btn-primary')
+			))->getForm();
 
         $form->handleRequest($request);
 
