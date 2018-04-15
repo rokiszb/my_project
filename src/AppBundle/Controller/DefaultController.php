@@ -13,10 +13,11 @@ use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\Config\FileLocator;
-use AppBundle\Entity\Subscription;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use AppBundle\Entity\Subscriptions;
+use AppBundle\Entity\Subscriber;
 
 class DefaultController extends Controller
 {
@@ -25,17 +26,13 @@ class DefaultController extends Controller
      */
     public function indexAction(Request $request)
     {
-        $subscriptionsDirectory = $this->getParameter('subscriptions_directory');
-        $subscriptionsContents = file_get_contents($subscriptionsDirectory);
-        $subscriptions = json_decode($subscriptionsContents, true);
-        $subscription = new Subscription();
+		$subscriptions = new Subscriptions();
 
         $form = $this->createFormBuilder();
         $form->add('name', TextType::class)
-             ->add('email', EmailType::class)
-            ;
+			 ->add('email', EmailType::class);
 
-        foreach ($subscriptions['subscriptions'] as $key => $value) {
+        foreach ($subscriptions->getSubscriptions() as $key => $value) {
             $form->add($value, CheckboxType::class, array(
                 'label'    => $value,
                 'required' => false,
@@ -44,39 +41,34 @@ class DefaultController extends Controller
         }
 
         $form = $form
-        ->add('save', SubmitType::class, array(
-            'label' => 'Submit',
-            'attr'=> array('class'=>'btn btn-primary')
-        ))->getForm();
+			->add('save', SubmitType::class, array(
+				'label' => 'Submit',
+				'attr'=> array('class'=>'btn btn-primary')
+			))->getForm();
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $formData = $form->getData();
-            $data['name'] = $formData['name'];
-            $data['email'] = $formData['email'];
-            $data['registration_time'] = date("Y-m-d H:i:s");
-            $data['unix_timestamp'] = time();
-            foreach ($formData as $name => $value) {
-                if (is_bool($value)) {
-                    $data['subscriptions'][$name] = $value;
-                }
-            }
-            $data['active'] = true;
+			$subscriber = new Subscriber($form->getData());
 
             $subscribersDir = $this->getParameter('subscribers_directory');
-            $jsonData = json_encode(array('0' => $data));
+            $jsonData = json_encode(array('0' => $subscriber->getSubscriberToJson()));
             $fileContents = file_get_contents($subscribersDir);
             $decodeJson = json_decode($fileContents, true);
-            $decodeJson[] = $data;
+            $decodeJson[] = $subscriber->getSubscriberToJson();
             $jsonData = json_encode($decodeJson, JSON_PRETTY_PRINT);
 
-            file_put_contents($subscribersDir, $jsonData );
-
-            $this->addFlash(
-                'notice',
-                'Subscriber created succesfully'
-            );
+            if (file_put_contents($subscribersDir, $jsonData )) {
+				$this->addFlash(
+					'notice',
+					'Subscriber created succesfully'
+				);
+			} else {
+				$this->addFlash(
+					'notice',
+					'Subscriber wasn\'t created'
+				);
+			}
 
             return $this->redirectToRoute('form');
         }
