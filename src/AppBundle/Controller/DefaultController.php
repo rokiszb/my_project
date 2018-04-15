@@ -52,7 +52,9 @@ class DefaultController extends Controller
 			$subscriber = new Subscriber($form->getData());
 
             $subscribersDir = $this->getParameter('subscribers_directory');
-            $jsonData = json_encode(array('0' => $subscriber->getSubscriberToJson()));
+            // $jsonData = json_encode(array('0' => $subscriber->getSubscriberToJson()));
+			$jsonData = $subscriber->getSubscriberToJson();
+			// var_dump($jsonData); die;
             $fileContents = file_get_contents($subscribersDir);
             $decodeJson = json_decode($fileContents, true);
             $decodeJson[] = $subscriber->getSubscriberToJson();

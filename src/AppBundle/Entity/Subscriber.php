@@ -25,13 +25,15 @@ class Subscriber
 
     public function getSubscriberToJson()
     {
-		$subscriber['name'] = $this->name;
-		$subscriber['email'] = $this->email;
-		$subscriber['registration_time'] = $this->registration_time;
-		$subscriber['subscriptions'] = $this->subscriptions;
-		$subscriber['active'] = $this->active;
+		$this->subscriber['name'] = $this->name;
+		$this->subscriber['email'] = $this->email;
+		$this->subscriber['registration_time'] = $this->registration_time;
+		$this->subscriber['subscriptions'] = $this->subscriptions;
+		$this->subscriber['active'] = $this->active;
 
-		return $subscriber;
+		$subscriberJSON = json_encode(array('0' => $this->subscriber));
+
+		return $subscriberJSON;
     }
 
 }
