@@ -11,5 +11,42 @@
             "Politics": true
         },
         "active": true
+    },
+    {
+        "name": "rr",
+        "email": "r@e",
+        "registration_time": "2018-04-15 17:04:26",
+        "unix_timestamp": 1523801066,
+        "subscriptions": {
+            "Media": true,
+            "News": false,
+            "Sports": false,
+            "Politics": false
+        },
+        "active": false
+    },
+    {
+        "name": "rr",
+        "email": "rko@ok",
+        "registration_time": "2018-04-15 17:27:52",
+        "subscriptions": {
+            "Media": true,
+            "News": false,
+            "Sports": false,
+            "Politics": false
+        },
+        "active": true
+    },
+    {
+        "name": "Rokas",
+        "email": "rokusas@emeta",
+        "registration_time": "2018-04-15 17:28:03",
+        "subscriptions": {
+            "Media": false,
+            "News": true,
+            "Sports": true,
+            "Politics": true
+        },
+        "active": true
     }
 ]
