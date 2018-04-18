@@ -49,27 +49,14 @@ class DefaultController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
 			$subscriber = new Subscriber($form->getData());
+			$save = $subscriber->saveToFile();
 
-            $subscribersDir = $this->getParameter('subscribers_directory');
-            // $jsonData = json_encode(array('0' => $subscriber->getSubscriberToJson()));
-			$jsonData = $subscriber->getSubscriberToJson();
-			// var_dump($jsonData); die;
-            $fileContents = file_get_contents($subscribersDir);
-            $decodeJson = json_decode($fileContents, true);
-            $decodeJson[] = $subscriber->getSubscriberToJson();
-            $jsonData = json_encode($decodeJson, JSON_PRETTY_PRINT);
-
-            if (file_put_contents($subscribersDir, $jsonData )) {
-				$this->addFlash(
-					'notice',
-					'Subscriber created succesfully'
-				);
+            if ($save === true) {
+				$this->addFlash('notice', 'Subscriber created succesfully');
 			} else {
-				$this->addFlash(
-					'notice',
-					'Subscriber wasn\'t created'
-				);
+				$this->addFlash('notice', 'Subscriber wasn\'t created');
 			}
 
             return $this->redirectToRoute('form');

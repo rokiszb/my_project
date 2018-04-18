@@ -48,5 +48,29 @@
             "Politics": true
         },
         "active": true
+    },
+    {
+        "name": "rr",
+        "email": "rokusas@emeta",
+        "registration_time": "2018-04-18 06:59:22",
+        "subscriptions": {
+            "Media": true,
+            "News": false,
+            "Sports": false,
+            "Politics": false
+        },
+        "active": true
+    },
+    {
+        "name": "rr",
+        "email": "ramunas@rok",
+        "registration_time": "2018-04-18 07:05:45",
+        "subscriptions": {
+            "Media": false,
+            "News": true,
+            "Sports": false,
+            "Politics": false
+        },
+        "active": true
     }
 ]

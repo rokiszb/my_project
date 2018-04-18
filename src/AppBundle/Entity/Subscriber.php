@@ -31,9 +31,24 @@ class Subscriber
 		$this->subscriber['subscriptions'] = $this->subscriptions;
 		$this->subscriber['active'] = $this->active;
 
-		$subscriberJSON = json_encode(array('0' => $this->subscriber));
+		$subscriberJSON =  $this->subscriber;
 
 		return $subscriberJSON;
-    }
+	}
+
+	public function saveToFile()
+	{
+        $subscribersDir = __DIR__.'/../../../app/Resources/data/subscribers.json';
+		$fileContents = file_get_contents($subscribersDir);
+		$decodeJson = json_decode($fileContents, true);
+		$decodeJson[] = $this->getSubscriberToJson();
+		$jsonData = json_encode($decodeJson, JSON_PRETTY_PRINT);
+
+		if (file_put_contents($subscribersDir, $jsonData )) {
+			return true;
+		}
+
+		return false;
+	}
 
 }
