@@ -76,13 +76,9 @@ class DefaultController extends Controller
         $form->add('name', TextType::class)
             ->add('email', EmailType::class)
             ->add('user_id', TextType::class, array(
-                'attr'=> array('hidden'=>'hidden')))
-            ;
+                'attr'=> array('hidden'=>'hidden')));
 
-        $subscriptionsDirectory = $this->getParameter('subscriptions_directory');
-        $subscriptionsContents = file_get_contents($subscriptionsDirectory);
-        $subscriptions = json_decode($subscriptionsContents, true);
-        foreach ($subscriptions['subscriptions'] as $key => $value) {
+        foreach (Subscriber::getSubscribers() as $key => $value) {
             $form->add($value, CheckboxType::class, array(
                 'label'    => $value,
                 'required' => false,
@@ -91,10 +87,10 @@ class DefaultController extends Controller
         }
 
         $form = $form
-        ->add('save', SubmitType::class, array(
-            'label' => 'Submit',
-            'attr'=> array('class'=>'btn btn-primary')))
-        ->getForm();
+			->add('save', SubmitType::class, array(
+				'label' => 'Submit',
+				'attr'=> array('class'=>'btn btn-primary')))
+			->getForm();
 
         $form->handleRequest($request);
 

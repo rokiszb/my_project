@@ -72,5 +72,17 @@
             "Politics": false
         },
         "active": true
+    },
+    {
+        "name": "rddd4",
+        "email": "rokusas@emeta",
+        "registration_time": "2018-04-18 07:33:41",
+        "subscriptions": {
+            "Media": true,
+            "News": false,
+            "Sports": true,
+            "Politics": false
+        },
+        "active": false
     }
 ]

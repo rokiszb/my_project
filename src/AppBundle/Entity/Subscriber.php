@@ -9,7 +9,9 @@ class Subscriber
     private $email;
     private $registration_time;
     private $active = true;
-    private $subscriptions = [];
+	private $subscriptions = [];
+	private $subscribersDir = __DIR__.'/../../../app/Resources/data/subscribers.json';
+	private $subscribtionsDir = __DIR__.'/../../../app/Resources/data/subscriptions.json';
 
     function __construct($formData) {
 		$this->name = $formData['name'];
@@ -49,6 +51,14 @@ class Subscriber
 		}
 
 		return false;
+	}
+
+	public static function getSubscribers()
+	{
+        // $subscriptionsDirectory = $this->getParameter('subscriptions_directory');
+        $subscriptionsContents = file_get_contents($this->subscriptionsDirectory);
+        $subscriptions = json_decode($subscriptionsContents, true);
+        return $subscriptions['subscriptions'];
 	}
 
 }
