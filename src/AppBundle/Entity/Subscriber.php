@@ -10,8 +10,8 @@ class Subscriber
     private $registration_time;
     private $active = true;
 	private $subscriptions = [];
-	private $subscribersDir = __DIR__.'/../../../app/Resources/data/subscribers.json';
-	private $subscribtionsDir = __DIR__.'/../../../app/Resources/data/subscriptions.json';
+	private static $subscribersDirectory = __DIR__.'/../../../app/Resources/data/subscribers.json';
+	private static $subscriptionsDirectory = __DIR__.'/../../../app/Resources/data/subscriptions.json';
 
     function __construct($formData) {
 		$this->name = $formData['name'];
@@ -40,13 +40,13 @@ class Subscriber
 
 	public function saveToFile()
 	{
-        $subscribersDir = __DIR__.'/../../../app/Resources/data/subscribers.json';
-		$fileContents = file_get_contents($subscribersDir);
+        // $subscribersDirectory = __DIR__.'/../../../app/Resources/data/subscribers.json';
+		$fileContents = file_get_contents(self::$subscribersDirectory);
 		$decodeJson = json_decode($fileContents, true);
 		$decodeJson[] = $this->getSubscriberToJson();
 		$jsonData = json_encode($decodeJson, JSON_PRETTY_PRINT);
 
-		if (file_put_contents($subscribersDir, $jsonData )) {
+		if (file_put_contents($subscribersDirectory, $jsonData )) {
 			return true;
 		}
 
@@ -56,7 +56,7 @@ class Subscriber
 	public static function getSubscribers()
 	{
         // $subscriptionsDirectory = $this->getParameter('subscriptions_directory');
-        $subscriptionsContents = file_get_contents($this->subscriptionsDirectory);
+        $subscriptionsContents = file_get_contents(self::$subscriptionsDirectory);
         $subscriptions = json_decode($subscriptionsContents, true);
         return $subscriptions['subscriptions'];
 	}

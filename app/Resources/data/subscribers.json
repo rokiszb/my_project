@@ -42,10 +42,10 @@
         "email": "rokusas@emeta",
         "registration_time": "2018-04-15 17:28:03",
         "subscriptions": {
-            "Media": false,
+            "Media": true,
             "News": true,
             "Sports": true,
-            "Politics": true
+            "Politics": false
         },
         "active": true
     },
@@ -84,5 +84,17 @@
             "Politics": false
         },
         "active": false
+    },
+    {
+        "name": "rokas",
+        "email": "rokas@new",
+        "registration_time": "2018-04-18 16:33:31",
+        "subscriptions": {
+            "Media": false,
+            "News": false,
+            "Sports": true,
+            "Politics": true
+        },
+        "active": true
     }
 ]

@@ -68,17 +68,19 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/edit/{subscriber}", name="editSubscriber")
+     * @Route("/edit/{subscriberId}", name="editSubscriber")
      */
-    public function editSubscriberAction($subscriber, Request $request)
+    public function editSubscriberAction($subscriberId, Request $request)
     {
+        $subscriptions = new Subscriptions();
+
         $form = $this->createFormBuilder();
         $form->add('name', TextType::class)
             ->add('email', EmailType::class)
             ->add('user_id', TextType::class, array(
                 'attr'=> array('hidden'=>'hidden')));
 
-        foreach (Subscriber::getSubscribers() as $key => $value) {
+        foreach ($subscriptions->getSubscriptions() as $key => $value) {
             $form->add($value, CheckboxType::class, array(
                 'label'    => $value,
                 'required' => false,
@@ -107,7 +109,8 @@ class DefaultController extends Controller
 
             $subscribersDir = $this->getParameter('subscribers_directory');
             $jsonData = json_encode(array('0' => $data));
-
+            $subscriber = new Subscriber($form->getData());
+            var_dump($subscriber->getSubscriberToJson());die;
             $fileContents = file_get_contents($subscribersDir);
             $decodeJson = json_decode($fileContents, true);
             $decodeJson[$formData['user_id']];
@@ -131,10 +134,11 @@ class DefaultController extends Controller
         $subscribersDir = $this->getParameter('subscribers_directory');
         $fileContents = file_get_contents($subscribersDir);
         $decodeJson = json_decode($fileContents, true);
+
         return $this->render('default/subscriberEdit.html.twig', [
             'form' => $form->createView(),
-            'userData' => $decodeJson[$subscriber],
-            'subscriber' => $subscriber,
+            'userData' => $decodeJson[$subscriberId],
+            'subscriber' => $subscriberId,
         ]);
     }
 
