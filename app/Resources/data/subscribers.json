@@ -6,11 +6,11 @@
         "unix_timestamp": 1517947164,
         "subscriptions": {
             "Media": false,
-            "News": true,
-            "Sports": false,
+            "News": false,
+            "Sports": true,
             "Politics": true
         },
-        "active": true
+        "active": false
     },
     {
         "name": "rr",
@@ -35,7 +35,7 @@
             "Sports": false,
             "Politics": false
         },
-        "active": true
+        "active": false
     },
     {
         "name": "Rokasd",
@@ -47,7 +47,7 @@
             "Sports": true,
             "Politics": false
         },
-        "active": true
+        "active": false
     },
     {
         "name": "rr",
@@ -59,7 +59,7 @@
             "Sports": false,
             "Politics": false
         },
-        "active": true
+        "active": false
     },
     {
         "name": "rr",
@@ -71,7 +71,7 @@
             "Sports": false,
             "Politics": false
         },
-        "active": true
+        "active": false
     },
     {
         "name": "rddd4",
@@ -94,6 +94,30 @@
             "News": false,
             "Sports": true,
             "Politics": true
+        },
+        "active": false
+    },
+    {
+        "name": "rokas",
+        "email": "rokas@emet",
+        "registration_time": "2018-04-19 21:10:55",
+        "subscriptions": {
+            "Media": false,
+            "News": true,
+            "Sports": false,
+            "Politics": true
+        },
+        "active": true
+    },
+    {
+        "name": "123",
+        "email": "rokas@rokas.com",
+        "registration_time": "2018-04-19 21:11:14",
+        "subscriptions": {
+            "Media": true,
+            "News": false,
+            "Sports": false,
+            "Politics": false
         },
         "active": true
     }

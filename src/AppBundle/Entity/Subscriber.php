@@ -70,13 +70,12 @@ class Subscriber
 
 	public function saveToFile()
 	{
-        // $subscribersDirectory = __DIR__.'/../../../app/Resources/data/subscribers.json';
 		$fileContents = file_get_contents(self::$subscribersDirectory);
 		$decodeJson = json_decode($fileContents, true);
 		$decodeJson[] = $this->getSubscriberToJson();
 		$jsonData = json_encode($decodeJson, JSON_PRETTY_PRINT);
 
-		if (file_put_contents($subscribersDirectory, $jsonData )) {
+		if (file_put_contents(self::$subscribersDirectory, $jsonData )) {
 			return true;
 		}
 
@@ -89,6 +88,20 @@ class Subscriber
         $subscriptionsContents = file_get_contents(self::$subscriptionsDirectory);
         $subscriptions = json_decode($subscriptionsContents, true);
         return $subscriptions['subscriptions'];
+	}
+
+	public static function delete($subscriberId)
+	{
+        $fileContents = file_get_contents(self::$subscribersDirectory);
+        $decodeJson = json_decode($fileContents, true);
+        $decodeJson[$subscriberId]['active'] = false;
+		$jsonData = json_encode($decodeJson, JSON_PRETTY_PRINT);
+
+		if (file_put_contents(self::$subscribersDirectory, $jsonData)) {
+			return  [ 'isDeleted' => true, 'email' => $decodeJson[$subscriberId]['email']];
+		}
+
+		return [ 'isDeleted' => false, 'email' => $decodeJson[$subscriberId]['email']];
 	}
 
 }

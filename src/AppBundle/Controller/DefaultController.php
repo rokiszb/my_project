@@ -125,19 +125,15 @@ class DefaultController extends Controller
     /**
      * @Route("/delete/{subscriberId}", name="deleteSubscriber")
      */
-    public function deleteSubscriberAction($subscriber, Request $request)
+    public function deleteSubscriberAction($subscriberId, Request $request)
     {
-        $subscribersDir = $this->getParameter('subscribers_directory');
-        $fileContents = file_get_contents($subscribersDir);
-        $decodeJson = json_decode($fileContents, true);
-        $decodeJson[$subscriber]['active'] = false;
-        $jsonData = json_encode($decodeJson, JSON_PRETTY_PRINT);
-        file_put_contents($subscribersDir, $jsonData);
+		$subscriber = Subscriber::delete($subscriberId);
 
-        $this->addFlash(
-            'notice',
-            'User with email '.$decodeJson[$subscriber]['email'].' was removed from subscribers list.'
-        );
+		if ($subscriber['isDeleted']) {
+			$this->addFlash('notice', 'User with email '.$subscriber['email'].' was removed from subscribers list.');
+		} else {
+			$this->addFlash('notice', 'User with email '.$subscriber['email'].' was not removed from subscribers list.');
+		}
 
         return $this->redirectToRoute('admin');
     }
