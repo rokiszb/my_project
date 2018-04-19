@@ -38,6 +38,36 @@ class Subscriber
 		return $subscriberJSON;
 	}
 
+    public function getUpdateSubscriberToJson()
+    {
+		$this->subscriber['name'] = $this->name;
+		$this->subscriber['email'] = $this->email;
+		$this->subscriber['subscriptions'] = $this->subscriptions;
+
+		$subscriberJSON =  $this->subscriber;
+
+		return $subscriberJSON;
+	}
+
+	public function update($subscriberId)
+	{
+		$fileContents = file_get_contents(self::$subscribersDirectory);;
+		$subscribersList = json_decode($fileContents, true);
+
+		$subscriber = $this->getUpdateSubscriberToJson();
+
+		$subscribersList[$subscriberId]['name'] = $subscriber['name'];
+		$subscribersList[$subscriberId]['email'] = $subscriber['email'];
+		$subscribersList[$subscriberId]['subscriptions'] = $subscriber['subscriptions'];
+
+		$jsonData = json_encode($subscribersList, JSON_PRETTY_PRINT);
+
+		if ( file_put_contents(self::$subscribersDirectory, $jsonData ) ) {
+			return true;
+		}
+		return false;
+	}
+
 	public function saveToFile()
 	{
         // $subscribersDirectory = __DIR__.'/../../../app/Resources/data/subscribers.json';

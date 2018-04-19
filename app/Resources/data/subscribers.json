@@ -38,11 +38,11 @@
         "active": true
     },
     {
-        "name": "Rokas",
-        "email": "rokusas@emeta",
+        "name": "Rokasd",
+        "email": "rokusas@emetas",
         "registration_time": "2018-04-15 17:28:03",
         "subscriptions": {
-            "Media": true,
+            "Media": false,
             "News": true,
             "Sports": true,
             "Politics": false

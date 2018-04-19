@@ -97,38 +97,18 @@ class DefaultController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
             $formData = $form->getData();
-
-            $data['name'] = $formData['name'];
-            $data['email'] = $formData['email'];
-            foreach ($formData as $name => $value) {
-                if (is_bool($value)) {
-                    $data['subscriptions'][$name] = $value;
-                }
-            }
-
-            $subscribersDir = $this->getParameter('subscribers_directory');
-            $jsonData = json_encode(array('0' => $data));
             $subscriber = new Subscriber($form->getData());
-            var_dump($subscriber->getSubscriberToJson());die;
-            $fileContents = file_get_contents($subscribersDir);
-            $decodeJson = json_decode($fileContents, true);
-            $decodeJson[$formData['user_id']];
+			$update = $subscriber->update($formData['user_id']);
 
-            $decodeJson[$formData['user_id']]['name'] = $data['name'];
-            $decodeJson[$formData['user_id']]['email'] = $data['email'];
-            $decodeJson[$formData['user_id']]['subscriptions'] = $data['subscriptions'];
+			if ($update === true) {
+				$this->addFlash('notice', 'User updated succesfully');
+			} else {
+				$this->addFlash('notice', 'User update unsuccessful');
+			}
 
-            $jsonData = json_encode($decodeJson, JSON_PRETTY_PRINT);
-
-            file_put_contents($subscribersDir, $jsonData );
-
-            $this->addFlash(
-                'notice',
-                'User updated succesfully'
-            );
-
-            return $this->redirectToRoute('editSubscriber', array('subscriber' => $formData['user_id'] ));
+            return $this->redirectToRoute('editSubscriber', array('subscriberId' => $formData['user_id'] ));
         }
 
         $subscribersDir = $this->getParameter('subscribers_directory');
@@ -143,7 +123,7 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/delete/{subscriber}", name="deleteSubscriber")
+     * @Route("/delete/{subscriberId}", name="deleteSubscriber")
      */
     public function deleteSubscriberAction($subscriber, Request $request)
     {
