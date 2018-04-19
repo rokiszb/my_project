@@ -120,5 +120,29 @@
             "Politics": false
         },
         "active": true
+    },
+    {
+        "name": "Rocoptus",
+        "email": "r@e",
+        "registration_time": "2018-04-19 21:27:46",
+        "subscriptions": {
+            "Media": false,
+            "News": true,
+            "Sports": false,
+            "Politics": false
+        },
+        "active": true
+    },
+    {
+        "name": "Rokas",
+        "email": "rokusas@emeta",
+        "registration_time": "2018-04-19 21:28:19",
+        "subscriptions": {
+            "Media": true,
+            "News": false,
+            "Sports": false,
+            "Politics": false
+        },
+        "active": true
     }
 ]
